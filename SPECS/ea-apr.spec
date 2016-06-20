@@ -14,7 +14,10 @@
 Summary: Apache Portable Runtime library
 Name: %{pkgname}
 Version: 1.5.2
-Release: 2%{?dist}
+
+# Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4540 for more details
+%define release_prefix 3
+Release: %{release_prefix}%{?dist}.cpanel
 # ASL 2.0: everything
 # ISC: network_io/apr-1.4.6/network_io/unix/inet_?to?.c
 # BSD with advertising: strings/apr_snprintf.c, strings/apr_fnmatch.c,
@@ -154,6 +157,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/rpm/macros.%{pkgname}
 
 %changelog
+* Thu Jun 16 2016 Dan Muey <dan@cpanel.net> - 1.5.2-3
+- EA-4383: Update Release value to OBS-proof versioning
+
 * Thu Mar 10 2016 David Nielson <david.nielson@cpanel.net> - 1.5.2-2
 - Removed Cloudlinux patch
 
