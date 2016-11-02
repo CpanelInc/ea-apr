@@ -1,0 +1,83 @@
+diff -ru apr-1.5.2/file_io/unix/filestat.c apr-1.5.2-symlink/file_io/unix/filestat.c
+--- apr-1.5.2/file_io/unix/filestat.c	2013-10-10 14:54:21.000000000 -0500
++++ apr-1.5.2-symlink/file_io/unix/filestat.c	2016-10-24 12:11:19.556168569 -0500
+@@ -336,4 +336,52 @@
+     }
+ }
+ 
++APR_DECLARE(apr_status_t) apr_stat_fd(apr_finfo_t *finfo, apr_file_t *fd,
++                                      apr_int32_t wanted, apr_pool_t *pool)
++{
++    struct_stat info;
++    int srv = fstat(fd->filedes, &info);
++
++    if (srv == 0) {
++        finfo->pool = pool;
++        finfo->fname = fd->fname;
++        fill_out_finfo(finfo, &info, wanted);
++        if (wanted & APR_FINFO_LINK)
++            wanted &= ~APR_FINFO_LINK;
++        return (wanted & ~finfo->valid) ? APR_INCOMPLETE : APR_SUCCESS;
++    }
++    else {
++#if !defined(ENOENT) || !defined(ENOTDIR)
++#error ENOENT || ENOTDIR not defined; please see the
++#error comments at this line in the source for a workaround.
++        /*
++         * If ENOENT || ENOTDIR is not defined in one of the your OS's
++         * include files, APR cannot report a good reason why the stat()
++         * of the file failed; there are cases where it can fail even though
++         * the file exists.  This opens holes in Apache, for example, because
++         * it becomes possible for someone to get a directory listing of a 
++         * directory even though there is an index (eg. index.html) file in 
++         * it.  If you do not have a problem with this, delete the above 
++         * #error lines and start the compile again.  If you need to do this,
++         * please submit a bug report to http://www.apache.org/bug_report.html
++         * letting us know that you needed to do this.  Please be sure to 
++         * include the operating system you are using.
++         */
++        /* WARNING: All errors will be handled as not found
++         */
++#if !defined(ENOENT) 
++        return APR_ENOENT;
++#else
++        /* WARNING: All errors but not found will be handled as not directory
++         */
++        if (errno != ENOENT)
++            return APR_ENOENT;
++        else
++            return errno;
++#endif
++#else /* All was defined well, report the usual: */
++        return errno;
++#endif
++    }
++}
+ 
+diff -ru apr-1.5.2/include/apr_file_io.h apr-1.5.2-symlink/include/apr_file_io.h
+--- apr-1.5.2/include/apr_file_io.h	2013-11-17 14:31:58.000000000 -0600
++++ apr-1.5.2-symlink/include/apr_file_io.h	2016-10-24 12:30:57.414524663 -0500
+@@ -964,6 +964,23 @@
+ APR_DECLARE(apr_status_t) apr_temp_dir_get(const char **temp_dir, 
+                                            apr_pool_t *p);
+ 
++/**
++ * Get the specified file's stats.  The file is specified by file
++ * descriptor. 
++ * @param finfo Where to store the information about the file, which is
++ * never touched if the call fails.
++ * @param fd The file descriptor of the file to stat.
++ * @param wanted The desired apr_finfo_t fields, as a bit flag of APR_FINFO_
++                 values 
++ * @param pool the pool to use to allocate the new file. 
++ *
++ * @note If @c APR_INCOMPLETE is returned all the fields in @a finfo may
++ *       not be filled in, and you need to check the @c finfo->valid bitmask
++ *       to verify that what you're looking for is there.
++ */ 
++APR_DECLARE(apr_status_t) apr_stat_fd(apr_finfo_t *finfo, apr_file_t *fd,
++                                   apr_int32_t wanted, apr_pool_t *pool);
++
+ /** @} */
+ 
+ #ifdef __cplusplus
