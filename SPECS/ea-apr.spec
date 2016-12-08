@@ -16,7 +16,7 @@ Name: %{pkgname}
 Version: 1.5.2
 
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4540 for more details
-%define release_prefix 4
+%define release_prefix 5
 Release: %{release_prefix}%{?dist}.cpanel
 # ASL 2.0: everything
 # ISC: network_io/apr-1.4.6/network_io/unix/inet_?to?.c
@@ -138,27 +138,34 @@ rm -rf $RPM_BUILD_ROOT
 %postun -p /sbin/ldconfig
 
 %files
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 %doc CHANGES LICENSE NOTICE
-%{prefix_lib}/libapr-%{aprver}.so.*
+%dir %{prefix_dir}
+%dir %{prefix_lib}
+%attr(0755,root,root) %{prefix_lib}/libapr-%{aprver}.so.*
 
 %files devel
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 %doc docs/APRDesign.html docs/canonical_filenames.html
 %doc docs/incomplete_types docs/non_apr_programs
-%{prefix_bin}/apr-%{aprver}-config
-%{prefix_lib}/libapr-%{aprver}.*a
-%{prefix_lib}/libapr-%{aprver}.so
+%dir %{prefix_bin}
+%attr(0755,root,root) %{prefix_bin}/apr-%{aprver}-config
+%attr(0755,root,root) %{prefix_lib}/libapr-%{aprver}.*a
+%attr(0755,root,root) %{prefix_lib}/libapr-%{aprver}.so
 %{_libdir}/pkgconfig/*.pc
 %dir %{prefix_lib}/apr-%{aprver}
 %dir %{prefix_lib}/apr-%{aprver}/build
-%{prefix_lib}/apr-%{aprver}/build/*
+%attr(0755,root,root) %{prefix_lib}/apr-%{aprver}/build/*
+%dir %{prefix_inc}
 %dir %{prefix_inc}/apr-%{aprver}
 %{prefix_inc}/apr-%{aprver}/*.h
 %{_datadir}/aclocal/find_apr.m4
 %{_sysconfdir}/rpm/macros.%{pkgname}
 
 %changelog
+* Fri Dec 02 2016 S. Kurt Newman <kurt.newman@cpanel.net> - 1.5.2-5
+- libdir is removed when the rpm is uninstalled (EA-5169)
+
 * Tue Oct 25 2016 Edwin Buck <e.buck@cpanel.net> - 1.5.2-4
 - EA-5473: Added function to do stat on a file descriptor.
 
@@ -396,7 +403,7 @@ rm -rf $RPM_BUILD_ROOT
 - add apr_file_seek() fixes from upstream (r326593, r326597)
 
 * Wed Dec  7 2005 Joe Orton <jorton@redhat.com> 1.2.2-3
-- apr-1-config: strip more exports (#175124) 
+- apr-1-config: strip more exports (#175124)
 
 * Tue Dec  6 2005 Joe Orton <jorton@redhat.com> 1.2.2-2
 - avoid linking against -lrt
