@@ -16,7 +16,7 @@ Name: %{pkgname}
 Version: 1.5.2
 
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4540 for more details
-%define release_prefix 5
+%define release_prefix 6
 Release: %{release_prefix}%{?dist}.cpanel
 # ASL 2.0: everything
 # ISC: network_io/apr-1.4.6/network_io/unix/inet_?to?.c
@@ -27,6 +27,7 @@ Release: %{release_prefix}%{?dist}.cpanel
 License: ASL 2.0 and BSD with advertising and ISC and BSD
 Group: System Environment/Libraries
 URL: http://apr.apache.org/
+Vendor: cPanel, Inc.
 Source0: http://www.apache.org/dist/apr/apr-%{version}.tar.bz2
 Source1: apr-wrapper.h
 Source2: macros.ea-apr
@@ -163,6 +164,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/rpm/macros.%{pkgname}
 
 %changelog
+* Fri Dec 16 2016 Jacob Perkins <jacob.perkins@cpanel.net> - 1.5.2-6
+- Added vendor field
+
 * Fri Dec 02 2016 S. Kurt Newman <kurt.newman@cpanel.net> - 1.5.2-5
 - libdir is removed when the rpm is uninstalled (EA-5169)
 
