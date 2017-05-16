@@ -7,6 +7,7 @@
 %define prefix_lib %{prefix_dir}/%{_lib}
 %define prefix_bin %{prefix_dir}/bin
 %define prefix_inc %{prefix_dir}/include
+%define prefix_data %{prefix_dir}/share
 
 # Arches on which the multilib apr.h hack is needed:
 %define multilib_arches %{ix86} ia64 ppc ppc64 s390 s390x x86_64
@@ -16,7 +17,7 @@ Name: %{pkgname}
 Version: 1.5.2
 
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4540 for more details
-%define release_prefix 6
+%define release_prefix 7
 Release: %{release_prefix}%{?dist}.cpanel
 # ASL 2.0: everything
 # ISC: network_io/apr-1.4.6/network_io/unix/inet_?to?.c
@@ -84,8 +85,8 @@ make %{?_smp_mflags}
 rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT
 
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/aclocal
-install -m 644 build/find_apr.m4 $RPM_BUILD_ROOT/%{_datadir}/aclocal
+mkdir -p $RPM_BUILD_ROOT/%{prefix_data}/aclocal
+install -m 644 build/find_apr.m4 $RPM_BUILD_ROOT/%{prefix_data}/aclocal
 
 # Trim exported dependecies
 sed -ri '/^dependency_libs/{s,-l(uuid|crypt) ,,g}' \
@@ -160,10 +161,13 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{prefix_inc}
 %dir %{prefix_inc}/apr-%{aprver}
 %{prefix_inc}/apr-%{aprver}/*.h
-%{_datadir}/aclocal/find_apr.m4
+%{prefix_data}/aclocal/find_apr.m4
 %{_sysconfdir}/rpm/macros.%{pkgname}
 
 %changelog
+* Tue Apr 18 2017 Sergey Fokin <https://github.com/titan-dn> - 1.5.2-7
+- fix file conflicts with system apr
+
 * Fri Dec 16 2016 Jacob Perkins <jacob.perkins@cpanel.net> - 1.5.2-6
 - Added vendor field
 
