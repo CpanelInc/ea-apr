@@ -17,7 +17,7 @@ Name: %{pkgname}
 Version: 1.5.2
 
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4540 for more details
-%define release_prefix 7
+%define release_prefix 8
 Release: %{release_prefix}%{?dist}.cpanel
 # ASL 2.0: everything
 # ISC: network_io/apr-1.4.6/network_io/unix/inet_?to?.c
@@ -38,6 +38,7 @@ Patch4: apr-1.2.7-pkgconf.patch
 Patch5: apr-1.5.2-symlink.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: autoconf, libtool, libuuid-devel, python
+BuildRequires: ea-openssl ea-openssl-devel
 # To enable SCTP support
 BuildRequires: lksctp-tools-devel
 
@@ -65,6 +66,9 @@ C data structures and routines.
 %patch3 -p1 -b .libdir
 %patch4 -p1 -b .pkgconf
 %patch5 -p1 -b .symlink
+
+export CFLAGS="-I/opt/cpanel/ea-openssl/include"
+export LDFLAGS="-L/opt/cpanel/ea-openssl/lib -R/opt/cpanel/ea-openssl/lib"
 
 %build
 # regenerate configure script etc.
@@ -165,6 +169,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/rpm/macros.%{pkgname}
 
 %changelog
+* Thu Jun 08 2017 Jacob Perkins <jacob.perkins@cpanel.net> - 1.5.2-8
+- Build against ea-openssl
+
 * Tue Apr 18 2017 Sergey Fokin <https://github.com/titan-dn> - 1.5.2-7
 - fix file conflicts with system apr
 
