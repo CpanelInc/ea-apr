@@ -8,6 +8,7 @@
 %define prefix_bin %{prefix_dir}/bin
 %define prefix_inc %{prefix_dir}/include
 %define prefix_data %{prefix_dir}/share
+%define ea_openssl_ver 1.0.2n-3
 
 # Arches on which the multilib apr.h hack is needed:
 %define multilib_arches %{ix86} ia64 ppc ppc64 s390 s390x x86_64
@@ -17,7 +18,7 @@ Name: %{pkgname}
 Version: 1.5.2
 
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4540 for more details
-%define release_prefix 9
+%define release_prefix 10
 Release: %{release_prefix}%{?dist}.cpanel
 # ASL 2.0: everything
 # ISC: network_io/apr-1.4.6/network_io/unix/inet_?to?.c
@@ -39,7 +40,7 @@ Patch5: apr-1.5.2-symlink.patch
 Patch6: apr-1.5.2-CVE-2017-12613.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: autoconf, libtool, libuuid-devel, python
-BuildRequires: ea-openssl ea-openssl-devel
+BuildRequires: ea-openssl >= %{ea_openssl_ver}, ea-openssl-devel >= %{ea_openssl_ver}
 # To enable SCTP support
 BuildRequires: lksctp-tools-devel
 
@@ -171,6 +172,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/rpm/macros.%{pkgname}
 
 %changelog
+* Mon Mar 20 2018 Cory McIntire <cory@cpanel.net> - 1.5.3-9
+- ZC-3552: Version ea-openssl requirements
+
 * Wed Nov 29 2017 Dmitriy Kasyanov <dkasyanov@cloudlinux.com> - 1.5.2-9
 - CVE-2017-12613: Out-of-bounds array deref in apr_time_exp*() functions
 
