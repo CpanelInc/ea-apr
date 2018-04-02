@@ -1,0 +1,22 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Rishwanth Yeddula <rish@cpanel.net>
+Date: Thu, 22 Mar 2018 12:59:51 -0500
+Subject: [PATCH 1/4] Increase timeout on testlock test
+
+---
+ test/testlock.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/test/testlock.c b/test/testlock.c
+index dddb52f..220f801 100644
+--- a/test/testlock.c
++++ b/test/testlock.c
+@@ -297,7 +297,7 @@ static void test_timeoutcond(abts_case *tc, void *data)
+             continue;
+         }
+         ABTS_INT_EQUAL(tc, 1, APR_STATUS_IS_TIMEUP(s));
+-        ABTS_ASSERT(tc, "Timer returned too late", end - begin - timeout < 100000);
++        ABTS_ASSERT(tc, "Timer returned too late", end - begin - timeout < 500000);
+         break;
+     }
+     ABTS_ASSERT(tc, "Too many retries", i < MAX_RETRY);

@@ -1,7 +1,18 @@
-diff -ru apr-1.5.2/file_io/unix/filestat.c apr-1.5.2-symlink/file_io/unix/filestat.c
---- apr-1.5.2/file_io/unix/filestat.c	2013-10-10 14:54:21.000000000 -0500
-+++ apr-1.5.2-symlink/file_io/unix/filestat.c	2016-10-24 12:11:19.556168569 -0500
-@@ -336,4 +336,52 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Rishwanth Yeddula <rish@cpanel.net>
+Date: Thu, 22 Mar 2018 13:23:22 -0500
+Subject: [PATCH 4/4] Add apr_stat_fd to file io layer
+
+---
+ file_io/unix/filestat.c | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
+ include/apr_file_io.h   | 17 +++++++++++++++++
+ 2 files changed, 65 insertions(+)
+
+diff --git a/file_io/unix/filestat.c b/file_io/unix/filestat.c
+index 220efd0..3ae0900 100644
+--- a/file_io/unix/filestat.c
++++ b/file_io/unix/filestat.c
+@@ -336,4 +336,52 @@ APR_DECLARE(apr_status_t) apr_stat(apr_finfo_t *finfo,
      }
  }
  
@@ -54,10 +65,11 @@ diff -ru apr-1.5.2/file_io/unix/filestat.c apr-1.5.2-symlink/file_io/unix/filest
 +    }
 +}
  
-diff -ru apr-1.5.2/include/apr_file_io.h apr-1.5.2-symlink/include/apr_file_io.h
---- apr-1.5.2/include/apr_file_io.h	2013-11-17 14:31:58.000000000 -0600
-+++ apr-1.5.2-symlink/include/apr_file_io.h	2016-10-24 12:30:57.414524663 -0500
-@@ -964,6 +964,23 @@
+diff --git a/include/apr_file_io.h b/include/apr_file_io.h
+index af93193..bdc6aa4 100644
+--- a/include/apr_file_io.h
++++ b/include/apr_file_io.h
+@@ -996,6 +996,23 @@ APR_DECLARE(apr_status_t) apr_file_mktemp(apr_file_t **fp, char *templ,
  APR_DECLARE(apr_status_t) apr_temp_dir_get(const char **temp_dir, 
                                             apr_pool_t *p);
  
