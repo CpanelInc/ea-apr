@@ -1,9 +1,17 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Rishwanth Yeddula <rish@cpanel.net>
+Date: Thu, 22 Mar 2018 13:04:42 -0500
+Subject: [PATCH 2/4] apr-config: Avoid using -L if libdir is in /usr
 
-- avoid adding %{_libdir} to --link-ld output
+---
+ apr-config.in | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- apr-1.2.2/apr-config.in.libdir
-+++ apr-1.2.2/apr-config.in
-@@ -181,8 +181,10 @@
+diff --git a/apr-config.in b/apr-config.in
+index 84b4073..0431909 100644
+--- a/apr-config.in
++++ b/apr-config.in
+@@ -182,8 +182,10 @@ while test $# -gt 0; do
      ;;
      --link-ld)
      if test "$location" = "installed"; then

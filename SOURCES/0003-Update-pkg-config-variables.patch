@@ -1,0 +1,65 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Rishwanth Yeddula <rish@cpanel.net>
+Date: Thu, 22 Mar 2018 13:16:26 -0500
+Subject: [PATCH 3/4] Update pkg-config variables
+
+---
+ Makefile.in   | 2 +-
+ apr-config.in | 7 ++++---
+ apr.pc.in     | 3 ++-
+ 3 files changed, 7 insertions(+), 5 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 5fb760e..7c54d2b 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -67,7 +67,7 @@ installbuilddir=@installbuilddir@
+ 
+ # Create apr-config script suitable for the install tree
+ apr-config.out: $(APR_CONFIG)
+-	sed 's,^\(location=\).*$$,\1installed,' < $(APR_CONFIG) > $@
++	sed 's,^\(location=\).*$$,\1installed,;s,^\(APR_.*_DIR\)=.*,\1="$${libdir}/build",' < $(APR_CONFIG) > $@
+ 
+ # Create apr_rules.mk suitable for the install tree
+ build/apr_rules.out: build/apr_rules.mk
+diff --git a/apr-config.in b/apr-config.in
+index 0431909..738d974 100644
+--- a/apr-config.in
++++ b/apr-config.in
+@@ -24,16 +24,17 @@ APR_DOTTED_VERSION="@APR_DOTTED_VERSION@"
+ prefix="@prefix@"
+ exec_prefix="@exec_prefix@"
+ bindir="@bindir@"
+-libdir="@libdir@"
+ datarootdir="@datadir@"
+ datadir="@datadir@"
+-installbuilddir="@installbuilddir@"
+ includedir="@includedir@"
+ 
++libdir=`pkg-config --variable=libdir apr-@APR_MAJOR_VERSION@`
++installbuilddir="${libdir}/apr-@APR_MAJOR_VERSION@/build"
++
+ CC="@CC@"
+ CPP="@CPP@"
+ SHELL="@SHELL@"
+-CPPFLAGS="@EXTRA_CPPFLAGS@"
++CPPFLAGS=`pkg-config --variable=CPPFLAGS apr-@APR_MAJOR_VERSION@`
+ CFLAGS="@EXTRA_CFLAGS@"
+ LDFLAGS="@EXTRA_LDFLAGS@"
+ LIBS="@EXTRA_LIBS@"
+diff --git a/apr.pc.in b/apr.pc.in
+index 318a81e..0f498df 100644
+--- a/apr.pc.in
++++ b/apr.pc.in
+@@ -3,9 +3,10 @@ exec_prefix=@exec_prefix@
+ libdir=@libdir@
+ APR_MAJOR_VERSION=@APR_MAJOR_VERSION@
+ includedir=@includedir@
++CPPFLAGS=@EXTRA_CPPFLAGS@
+ 
+ Name: APR
+ Description: The Apache Portable Runtime library
+ Version: @APR_DOTTED_VERSION@
+ Libs: -L${libdir} -l@APR_LIBNAME@ @EXTRA_LIBS@
+-Cflags: @EXTRA_CPPFLAGS@ @EXTRA_CFLAGS@ -I${includedir}
++Cflags: ${CPPFLAGS} @EXTRA_CFLAGS@ -I${includedir}
