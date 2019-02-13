@@ -15,10 +15,10 @@
 
 Summary: Apache Portable Runtime library
 Name: %{pkgname}
-Version: 1.6.3
+Version: 1.6.5
 
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4540 for more details
-%define release_prefix 2
+%define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 # ASL 2.0: everything
 # ISC: network_io/apr-1.4.6/network_io/unix/inet_?to?.c
@@ -170,6 +170,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/rpm/macros.%{pkgname}
 
 %changelog
+* Wed Feb 13 2019 Cory McIntire <cory@cpanel.net> - 1.6.5-1
+- EA-8225: Update to version 1.6.5
+
 * Mon Apr 16 2018 Rishwanth Yeddula <rish@cpanel.net> - 1.6.3-2
 - EA-7382: Update dependency on ea-openssl to require the latest version with versioned symbols.
 
