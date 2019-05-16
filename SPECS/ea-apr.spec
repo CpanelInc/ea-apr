@@ -15,7 +15,7 @@
 
 Summary: Apache Portable Runtime library
 Name: %{pkgname}
-Version: 1.6.5
+Version: 1.7.0
 
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4540 for more details
 %define release_prefix 1
@@ -33,10 +33,9 @@ Vendor: cPanel, Inc.
 Source0: http://www.apache.org/dist/apr/apr-%{version}.tar.gz
 Source1: apr-wrapper.h
 Source2: macros.ea-apr
-Patch2: 0001-Increase-timeout-on-testlock-test.patch
-Patch3: 0002-apr-config-Avoid-using-L-if-libdir-is-in-usr.patch
-Patch4: 0003-Update-pkg-config-variables.patch
-Patch5: 0004-Add-apr_stat_fd-to-file-io-layer.patch
+Patch1: 0001-apr-config-Avoid-using-L-if-libdir-is-in-usr.patch
+Patch2: 0002-Update-pkg-config-variables.patch
+Patch3: 0003-Add-apr_stat_fd-to-file-io-layer.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: autoconf, libtool, libuuid-devel, python
 BuildRequires: ea-openssl >= %{ea_openssl_ver}, ea-openssl-devel >= %{ea_openssl_ver}
@@ -63,10 +62,9 @@ C data structures and routines.
 
 %prep
 %setup -q -n apr-%{version}
-%patch2 -p1 -b .locktimeout
-%patch3 -p1 -b .libdir
-%patch4 -p1 -b .pkgconf
-%patch5 -p1 -b .symlink
+%patch1 -p1 -b .libdir
+%patch2 -p1 -b .pkgconf
+%patch3 -p1 -b .symlink
 
 export CFLAGS="-I/opt/cpanel/ea-openssl/include"
 export LDFLAGS="-L/opt/cpanel/ea-openssl/lib -R/opt/cpanel/ea-openssl/lib"
@@ -170,6 +168,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/rpm/macros.%{pkgname}
 
 %changelog
+* Thu May 16 2019 Cory McIntire <cory@cpanel.net> - 1.7.0-1
+- EA-8471: Update apr from v1.6.5 to v1.7.0
+
 * Wed Feb 13 2019 Cory McIntire <cory@cpanel.net> - 1.6.5-1
 - EA-8225: Update to version 1.6.5
 
