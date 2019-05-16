@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Rishwanth Yeddula <rish@cpanel.net>
 Date: Thu, 22 Mar 2018 13:16:26 -0500
-Subject: [PATCH 3/4] Update pkg-config variables
+Subject: [PATCH 2/3] Update pkg-config variables
 
 ---
  Makefile.in   | 2 +-
@@ -10,10 +10,10 @@ Subject: [PATCH 3/4] Update pkg-config variables
  3 files changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/Makefile.in b/Makefile.in
-index 5fb760e..7c54d2b 100644
+index 7aeefd0..0fa79a9 100644
 --- a/Makefile.in
 +++ b/Makefile.in
-@@ -67,7 +67,7 @@ installbuilddir=@installbuilddir@
+@@ -69,7 +69,7 @@ installbuilddir=@installbuilddir@
  
  # Create apr-config script suitable for the install tree
  apr-config.out: $(APR_CONFIG)
