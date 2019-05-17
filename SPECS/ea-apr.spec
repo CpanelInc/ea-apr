@@ -33,10 +33,9 @@ Vendor: cPanel, Inc.
 Source0: http://www.apache.org/dist/apr/apr-%{version}.tar.gz
 Source1: apr-wrapper.h
 Source2: macros.ea-apr
-Patch2: 0001-Increase-timeout-on-testlock-test.patch
-Patch3: 0002-apr-config-Avoid-using-L-if-libdir-is-in-usr.patch
-Patch4: 0003-Update-pkg-config-variables.patch
-Patch5: 0004-Add-apr_stat_fd-to-file-io-layer.patch
+Patch1: 0001-apr-config-Avoid-using-L-if-libdir-is-in-usr.patch
+Patch2: 0002-Update-pkg-config-variables.patch
+Patch3: 0003-Add-apr_stat_fd-to-file-io-layer.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: autoconf, libtool, libuuid-devel, python
 BuildRequires: ea-openssl >= %{ea_openssl_ver}, ea-openssl-devel >= %{ea_openssl_ver}
@@ -63,10 +62,9 @@ C data structures and routines.
 
 %prep
 %setup -q -n apr-%{version}
-%patch2 -p1 -b .locktimeout
-%patch3 -p1 -b .libdir
-%patch4 -p1 -b .pkgconf
-%patch5 -p1 -b .symlink
+%patch1 -p1 -b .libdir
+%patch2 -p1 -b .pkgconf
+%patch3 -p1 -b .symlink
 
 export CFLAGS="-I/opt/cpanel/ea-openssl/include"
 export LDFLAGS="-L/opt/cpanel/ea-openssl/lib -R/opt/cpanel/ea-openssl/lib"
