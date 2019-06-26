@@ -18,7 +18,7 @@ Name: %{pkgname}
 Version: 1.7.0
 
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4540 for more details
-%define release_prefix 1
+%define release_prefix 2
 Release: %{release_prefix}%{?dist}.cpanel
 # ASL 2.0: everything
 # ISC: network_io/apr-1.4.6/network_io/unix/inet_?to?.c
@@ -81,7 +81,8 @@ export ac_cv_search_shm_open=no
         --with-devrandom=/dev/urandom \
         --prefix=%{prefix_dir} \
         --libdir=%{prefix_lib} \
-        --with-installbuilddir=%{prefix_lib}/apr-%{aprver}/build
+        --with-installbuilddir=%{prefix_lib}/apr-%{aprver}/build \
+        apr_lock_method=USE_SYSVSEM_SERIALIZE
 make %{?_smp_mflags}
 
 %install
@@ -168,6 +169,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/rpm/macros.%{pkgname}
 
 %changelog
+* Tue Jun 26 2019 Tim Mullin <tim@cpanel.net> - 1.7.0-2
+- EA-8542: Change apr_lock_method to USE_SYSVSEM_SERIALIZE
+
 * Thu May 16 2019 Cory McIntire <cory@cpanel.net> - 1.7.0-1
 - EA-8471: Update apr from v1.6.5 to v1.7.0
 
