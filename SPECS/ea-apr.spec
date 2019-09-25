@@ -38,7 +38,7 @@ Patch2: 0002-Update-pkg-config-variables.patch
 Patch3: 0003-Add-apr_stat_fd-to-file-io-layer.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: autoconf, libtool, libuuid-devel, python
-BuildRequires: ea-openssl >= %{ea_openssl_ver}, ea-openssl-devel >= %{ea_openssl_ver}
+BuildRequires: ea-openssl11 >= %{ea_openssl_ver}, ea-openssl11-devel >= %{ea_openssl_ver}
 # To enable SCTP support
 BuildRequires: lksctp-tools-devel
 
@@ -66,8 +66,8 @@ C data structures and routines.
 %patch2 -p1 -b .pkgconf
 %patch3 -p1 -b .symlink
 
-export CFLAGS="-I/opt/cpanel/ea-openssl/include"
-export LDFLAGS="-L/opt/cpanel/ea-openssl/lib -R/opt/cpanel/ea-openssl/lib"
+export CFLAGS="-I/opt/cpanel/ea-openssl11/include"
+export LDFLAGS="-L/opt/cpanel/ea-openssl11/lib -R/opt/cpanel/ea-openssl11/lib"
 
 %build
 # regenerate configure script etc.
