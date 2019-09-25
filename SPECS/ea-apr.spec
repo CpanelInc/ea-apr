@@ -8,7 +8,7 @@
 %define prefix_bin %{prefix_dir}/bin
 %define prefix_inc %{prefix_dir}/include
 %define prefix_data %{prefix_dir}/share
-%define ea_openssl_ver 1.0.2o-2
+%define ea_openssl_ver 1.1.1d-1
 
 # Arches on which the multilib apr.h hack is needed:
 %define multilib_arches %{ix86} ia64 ppc ppc64 s390 s390x x86_64
@@ -18,7 +18,7 @@ Name: %{pkgname}
 Version: 1.7.0
 
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4540 for more details
-%define release_prefix 2
+%define release_prefix 3
 Release: %{release_prefix}%{?dist}.cpanel
 # ASL 2.0: everything
 # ISC: network_io/apr-1.4.6/network_io/unix/inet_?to?.c
@@ -38,7 +38,7 @@ Patch2: 0002-Update-pkg-config-variables.patch
 Patch3: 0003-Add-apr_stat_fd-to-file-io-layer.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: autoconf, libtool, libuuid-devel, python
-BuildRequires: ea-openssl >= %{ea_openssl_ver}, ea-openssl-devel >= %{ea_openssl_ver}
+BuildRequires: ea-openssl11 >= %{ea_openssl_ver}, ea-openssl11-devel >= %{ea_openssl_ver}
 # To enable SCTP support
 BuildRequires: lksctp-tools-devel
 
@@ -66,8 +66,8 @@ C data structures and routines.
 %patch2 -p1 -b .pkgconf
 %patch3 -p1 -b .symlink
 
-export CFLAGS="-I/opt/cpanel/ea-openssl/include"
-export LDFLAGS="-L/opt/cpanel/ea-openssl/lib -R/opt/cpanel/ea-openssl/lib"
+export CFLAGS="-I/opt/cpanel/ea-openssl11/include"
+export LDFLAGS="-L/opt/cpanel/ea-openssl11/lib -R/opt/cpanel/ea-openssl11/lib"
 
 %build
 # regenerate configure script etc.
@@ -169,6 +169,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/rpm/macros.%{pkgname}
 
 %changelog
+* Tue Sep 24 2019 Daniel Muey <dan@cpanel.net> - 1.7.0-3
+- ZC-4361: Update ea-openssl requirement to v1.1.1 (ZC-5583)
+
 * Tue Jun 26 2019 Tim Mullin <tim@cpanel.net> - 1.7.0-2
 - EA-8542: Change apr_lock_method to USE_SYSVSEM_SERIALIZE
 
