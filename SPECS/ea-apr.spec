@@ -37,7 +37,14 @@ Patch1: 0001-apr-config-Avoid-using-L-if-libdir-is-in-usr.patch
 Patch2: 0002-Update-pkg-config-variables.patch
 Patch3: 0003-Add-apr_stat_fd-to-file-io-layer.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
-BuildRequires: autoconf, libtool, libuuid-devel, python
+BuildRequires: autoconf, libtool, libuuid-devel
+
+%if 0%{?rhel} > 7
+BuildRequires: python36
+%else
+BuildRequires: python
+%endif
+
 BuildRequires: ea-openssl11 >= %{ea_openssl_ver}, ea-openssl11-devel >= %{ea_openssl_ver}
 # To enable SCTP support
 BuildRequires: lksctp-tools-devel
@@ -70,6 +77,17 @@ export CFLAGS="-I/opt/cpanel/ea-openssl11/include"
 export LDFLAGS="-L/opt/cpanel/ea-openssl11/lib -R/opt/cpanel/ea-openssl11/lib"
 
 %build
+
+echo "HOWDY"
+#dnf search python36
+echo "WHEREIS"
+whereis python3
+echo "RPM"
+rpm -qa | grep -i python
+echo "PrintPath"
+build/PrintPath python3 python2 python
+echo "HOWDY END"
+
 # regenerate configure script etc.
 ./buildconf
 
