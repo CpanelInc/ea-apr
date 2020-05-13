@@ -18,7 +18,7 @@ Name: %{pkgname}
 Version: 1.7.0
 
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4540 for more details
-%define release_prefix 3
+%define release_prefix 4
 Release: %{release_prefix}%{?dist}.cpanel
 # ASL 2.0: everything
 # ISC: network_io/apr-1.4.6/network_io/unix/inet_?to?.c
@@ -37,7 +37,14 @@ Patch1: 0001-apr-config-Avoid-using-L-if-libdir-is-in-usr.patch
 Patch2: 0002-Update-pkg-config-variables.patch
 Patch3: 0003-Add-apr_stat_fd-to-file-io-layer.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
-BuildRequires: autoconf, libtool, libuuid-devel, python
+BuildRequires: autoconf, libtool, libuuid-devel
+
+%if 0%{?rhel} > 7
+BuildRequires: python36
+%else
+BuildRequires: python
+%endif
+
 BuildRequires: ea-openssl11 >= %{ea_openssl_ver}, ea-openssl11-devel >= %{ea_openssl_ver}
 # To enable SCTP support
 BuildRequires: lksctp-tools-devel
@@ -70,6 +77,7 @@ export CFLAGS="-I/opt/cpanel/ea-openssl11/include"
 export LDFLAGS="-L/opt/cpanel/ea-openssl11/lib -R/opt/cpanel/ea-openssl11/lib"
 
 %build
+
 # regenerate configure script etc.
 ./buildconf
 
@@ -169,6 +177,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/rpm/macros.%{pkgname}
 
 %changelog
+* Thu May 07 2020 Julian Brown <julian.brown@cpanel.net> - 1.7.0-4
+- ZC-6743: Build on C8
+
 * Tue Sep 24 2019 Daniel Muey <dan@cpanel.net> - 1.7.0-3
 - ZC-4361: Update ea-openssl requirement to v1.1.1 (ZC-5583)
 
