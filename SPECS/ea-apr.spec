@@ -78,16 +78,6 @@ export LDFLAGS="-L/opt/cpanel/ea-openssl11/lib -R/opt/cpanel/ea-openssl11/lib"
 
 %build
 
-echo "HOWDY"
-#dnf search python36
-echo "WHEREIS"
-whereis python3
-echo "RPM"
-rpm -qa | grep -i python
-echo "PrintPath"
-build/PrintPath python3 python2 python
-echo "HOWDY END"
-
 # regenerate configure script etc.
 ./buildconf
 
