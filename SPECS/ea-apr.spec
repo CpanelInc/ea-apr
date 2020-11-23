@@ -18,7 +18,7 @@ Name: %{pkgname}
 Version: 1.7.0
 
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4540 for more details
-%define release_prefix 4
+%define release_prefix 5
 Release: %{release_prefix}%{?dist}.cpanel
 # ASL 2.0: everything
 # ISC: network_io/apr-1.4.6/network_io/unix/inet_?to?.c
@@ -177,6 +177,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/rpm/macros.%{pkgname}
 
 %changelog
+* Mon Nov 23 2020 Julian Brown <julian.brown@cpanel.net> - 1.7.0-5
+- ZC-8005: Remove ea-openssl11 on C8
+
 * Thu May 07 2020 Julian Brown <julian.brown@cpanel.net> - 1.7.0-4
 - ZC-6743: Build on C8
 
