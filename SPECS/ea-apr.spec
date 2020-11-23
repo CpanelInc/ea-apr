@@ -45,7 +45,18 @@ BuildRequires: python36
 BuildRequires: python
 %endif
 
+%if 0%{?rhel} > 7
+#
+# We made a conscious decision to only use system openssl on C8.
+# See design doc:
+# https://enterprise.cpanel.net/projects/EA4/repos/ea-openssl11/DESIGN.md
+# 
+BuildRequires: openssl openssl-devel
+Requires: openssl
+%else
 BuildRequires: ea-openssl11 >= %{ea_openssl_ver}, ea-openssl11-devel >= %{ea_openssl_ver}
+%endif
+
 # To enable SCTP support
 BuildRequires: lksctp-tools-devel
 
@@ -73,8 +84,10 @@ C data structures and routines.
 %patch2 -p1 -b .pkgconf
 %patch3 -p1 -b .symlink
 
+%if 0%{?rhel} < 8
 export CFLAGS="-I/opt/cpanel/ea-openssl11/include"
 export LDFLAGS="-L/opt/cpanel/ea-openssl11/lib -R/opt/cpanel/ea-openssl11/lib"
+%endif
 
 %build
 
