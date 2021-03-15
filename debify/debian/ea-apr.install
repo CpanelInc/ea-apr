@@ -1,0 +1,6 @@
+debian/tmp/opt/cpanel/ea-apr16/bin/apr-1-config /opt/cpanel/ea-apr16/bin
+debian/tmp/opt/cpanel/ea-apr16/lib64/libapr-1.la /opt/cpanel/ea-apr16/lib64
+debian/tmp/opt/cpanel/ea-apr16/lib64/libapr-1.so /opt/cpanel/ea-apr16/lib64
+debian/tmp/opt/cpanel/ea-apr16/lib64/libapr-1.so.0 /opt/cpanel/ea-apr16/lib64
+debian/tmp/opt/cpanel/ea-apr16/lib64/libapr-1.so.0.7.0 /opt/cpanel/ea-apr16/lib64
+debian/tmp/opt/cpanel/ea-apr16/share/aclocal /opt/cpanel/ea-apr16/share
