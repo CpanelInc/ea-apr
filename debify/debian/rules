@@ -32,7 +32,7 @@ release_prefix   := 6
 scl_prefix       := 
 version          := 1.7.0
 DEB_INSTALL_ROOT := /usr/src/packages/BUILD/debian/tmp
-DEB_SOURCE_ROOT  := /usr/src/packages/SOURCES
+DEB_SOURCE_ROOT  := /usr/src/packages/BUILD/debian/SOURCES_FROM_SPEC
 SOURCE1          := $(DEB_SOURCE_ROOT)/apr-wrapper.h
 SOURCE2          := $(DEB_SOURCE_ROOT)/macros.ea-apr
 ## END_MAKE_VARS
@@ -86,8 +86,16 @@ override_dh_auto_install:
 	# Unpackaged files:
 	rm -f $(DEB_INSTALL_ROOT)$(prefix_lib)/apr.exp \
 	      $(DEB_INSTALL_ROOT)$(prefix_lib)/libapr-*.a
-	# get a full file list
-	find debian/tmp/opt/cpanel/ea-apr16 -type f -print0 | xargs -0 ls -ld
+	mkdir -p $(DEB_INSTALL_ROOT)/docs
+	cp /usr/src/packages/BUILD/CHANGES $(DEB_INSTALL_ROOT)/docs
+	cp /usr/src/packages/BUILD/LICENSE $(DEB_INSTALL_ROOT)/docs
+	cp /usr/src/packages/BUILD/NOTICE $(DEB_INSTALL_ROOT)/docs
+	cp /usr/src/packages/BUILD/docs/APRDesign.html $(DEB_INSTALL_ROOT)/docs
+	cp /usr/src/packages/BUILD/docs/canonical_filenames.html $(DEB_INSTALL_ROOT)/docs
+	cp /usr/src/packages/BUILD/docs/incomplete_types $(DEB_INSTALL_ROOT)/docs
+	cp /usr/src/packages/BUILD/docs/non_apr_programs $(DEB_INSTALL_ROOT)/docs
+	mv $(DEB_INSTALL_ROOT)/$(prefix_inc)/apr-$(aprver)/apr.h $(DEB_INSTALL_ROOT)/$(prefix_inc)/apr-$(aprver)/apr-x86_64.h
+	install -c -m644 $(SOURCE1) $(DEB_INSTALL_ROOT)/$(prefix_inc)/apr-$(aprver)/apr.h
 
 override_dh_auto_test:
 	echo "Ignoring Tests"
