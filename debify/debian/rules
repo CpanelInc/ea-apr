@@ -1,7 +1,5 @@
 #!/usr/bin/make -f
 
-## BEGIN_MAKE_VARS
-## NOTE: These variables are re-generated for each version
 __isa_bits       := 
 __isa_name       := 
 __sourcedir      := 
@@ -76,13 +74,6 @@ override_dh_auto_install:
 	mv $(DEB_INSTALL_ROOT)$(prefix_lib)/pkgconfig/apr-$(aprver).pc $(DEB_INSTALL_ROOT)$(_libdir)/pkgconfig/$(prefix_name)-$(aprver).pc
 	echo "PKGCONFIG: 002 " $(DEB_INSTALL_ROOT)$(_libdir)/pkgconfig
 	find $(DEB_INSTALL_ROOT)$(_libdir)/pkgconfig -type f -print0 | xargs -0 ls -ld
-	# Set up the macros file
-	install -d -m 755 $(DEB_INSTALL_ROOT)$(_sysconfdir)/rpm
-	sed -e 's/@APR_NAME@/$(prefix_name)/g' \
-	    -e 's/@APR_VER@/$(aprver)/g' \
-	    -e 's,@APR_DIR@,$(prefix_dir),g' \
-	    -e 's/@NAMESPACE@/$(ns_name)_/g' \
-	    $(SOURCE2) > $(DEB_INSTALL_ROOT)$(_sysconfdir)/rpm/macros.$(pkgname)
 	# Unpackaged files:
 	rm -f $(DEB_INSTALL_ROOT)$(prefix_lib)/apr.exp \
 	      $(DEB_INSTALL_ROOT)$(prefix_lib)/libapr-*.a
