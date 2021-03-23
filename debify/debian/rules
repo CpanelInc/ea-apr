@@ -5,7 +5,7 @@ __isa_name       :=
 __sourcedir      := 
 _datadir         := 
 _lib             := lib64
-_libdir          := /opt/cpanel/ea-apr16/lib64
+_libdir          := /usr/lib64
 _root_includedir := 
 _root_libdir     := 
 _root_sbindir    := 
@@ -77,14 +77,14 @@ override_dh_auto_install:
 	# Unpackaged files:
 	rm -f $(DEB_INSTALL_ROOT)$(prefix_lib)/apr.exp \
 	      $(DEB_INSTALL_ROOT)$(prefix_lib)/libapr-*.a
-	mkdir -p $(DEB_INSTALL_ROOT)/docs
-	cp /usr/src/packages/BUILD/CHANGES $(DEB_INSTALL_ROOT)/docs
-	cp /usr/src/packages/BUILD/LICENSE $(DEB_INSTALL_ROOT)/docs
-	cp /usr/src/packages/BUILD/NOTICE $(DEB_INSTALL_ROOT)/docs
-	cp /usr/src/packages/BUILD/docs/APRDesign.html $(DEB_INSTALL_ROOT)/docs
-	cp /usr/src/packages/BUILD/docs/canonical_filenames.html $(DEB_INSTALL_ROOT)/docs
-	cp /usr/src/packages/BUILD/docs/incomplete_types $(DEB_INSTALL_ROOT)/docs
-	cp /usr/src/packages/BUILD/docs/non_apr_programs $(DEB_INSTALL_ROOT)/docs
+	mkdir -p $(DEB_INSTALL_ROOT)/usr/share/doc/ea-apr-$(version)
+	cp /usr/src/packages/BUILD/CHANGES $(DEB_INSTALL_ROOT)/usr/share/doc/ea-apr-$(version)
+	cp /usr/src/packages/BUILD/LICENSE $(DEB_INSTALL_ROOT)/usr/share/doc/ea-apr-$(version)
+	cp /usr/src/packages/BUILD/NOTICE $(DEB_INSTALL_ROOT)/usr/share/doc/ea-apr-$(version)
+	cp /usr/src/packages/BUILD/docs/APRDesign.html $(DEB_INSTALL_ROOT)/usr/share/doc/ea-apr-$(version)
+	cp /usr/src/packages/BUILD/docs/canonical_filenames.html $(DEB_INSTALL_ROOT)/usr/share/doc/ea-apr-$(version)
+	cp /usr/src/packages/BUILD/docs/incomplete_types $(DEB_INSTALL_ROOT)/usr/share/doc/ea-apr-$(version)
+	cp /usr/src/packages/BUILD/docs/non_apr_programs $(DEB_INSTALL_ROOT)/usr/share/doc/ea-apr-$(version)
 	mv $(DEB_INSTALL_ROOT)/$(prefix_inc)/apr-$(aprver)/apr.h $(DEB_INSTALL_ROOT)/$(prefix_inc)/apr-$(aprver)/apr-x86_64.h
 	install -c -m644 $(SOURCE1) $(DEB_INSTALL_ROOT)/$(prefix_inc)/apr-$(aprver)/apr.h
 
