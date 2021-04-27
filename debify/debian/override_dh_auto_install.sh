@@ -18,20 +18,13 @@ sed -ri '/^Libs/{s,-l(uuid|crypt) ,,g}' \
 # pkgconfig files something else
 mkdir -p $DEB_INSTALL_ROOT$_libdir/pkgconfig
 mv $DEB_INSTALL_ROOT$prefix_lib/pkgconfig/apr-$aprver.pc $DEB_INSTALL_ROOT$_libdir/pkgconfig/$prefix_name-$aprver.pc
-# Set up the macros file
-install -d -m 755 $DEB_INSTALL_ROOT$_sysconfdir/rpm
-sed -e 's/@APR_NAME@/$prefix_name/g' \
-    -e 's/@APR_VER@/$aprver/g' \
-    -e 's,@APR_DIR@,$prefix_dir,g' \
-    -e 's/@NAMESPACE@/$ns_name_/g' \
-    $SOURCE2 > $DEB_INSTALL_ROOT$_sysconfdir/rpm/macros.$pkgname
-%ifarch $multilib_arches
+
 # Ugly hack to allow parallel installation of 32-bit and 64-bit apr-devel
 # packages:
 mv $DEB_INSTALL_ROOT$prefix_inc/apr-$aprver/apr.h \
-   $DEB_INSTALL_ROOT$prefix_inc/apr-$aprver/apr-$_arch.h
+   $DEB_INSTALL_ROOT$prefix_inc/apr-$aprver/apr-x86_64.h
 install -c -m644 $SOURCE1 $DEB_INSTALL_ROOT$prefix_inc/apr-$aprver/apr.h
-%endif
+
 # Unpackaged files:
 rm -f $DEB_INSTALL_ROOT$prefix_lib/apr.exp \
       $DEB_INSTALL_ROOT$prefix_lib/libapr-*.a

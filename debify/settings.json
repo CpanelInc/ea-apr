@@ -1,0 +1,6 @@
+{
+    "adjust_install_file_src" : [
+        ["usr/share/doc/[^/]*/", ""],
+        ["^(APRDesign.html|canonical_filenames.html|incomplete_types|non_apr_programs)$", "docs/$1"]
+    ]
+}
