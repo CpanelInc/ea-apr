@@ -1,0 +1,7 @@
+{
+    "adjust_install_file_src" : [
+        ["usr/share/doc/[^/]*/", ""],
+        ["usr/lib64/pkgconfig/", "debian/tmp/opt/cpanel/ea-apr/root/usr/lib64/pkgconfig/"],
+        ["^(APRDesign.html|canonical_filenames.html|incomplete_types|non_apr_programs)$", "docs/$1"]
+    ]
+}
