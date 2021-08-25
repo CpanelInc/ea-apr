@@ -18,7 +18,7 @@ Name: %{pkgname}
 Version: 1.7.0
 
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4540 for more details
-%define release_prefix 5
+%define release_prefix 6
 Release: %{release_prefix}%{?dist}.cpanel
 # ASL 2.0: everything
 # ISC: network_io/apr-1.4.6/network_io/unix/inet_?to?.c
@@ -36,6 +36,7 @@ Source2: macros.ea-apr
 Patch1: 0001-apr-config-Avoid-using-L-if-libdir-is-in-usr.patch
 Patch2: 0002-Update-pkg-config-variables.patch
 Patch3: 0003-Add-apr_stat_fd-to-file-io-layer.patch
+Patch4: 0004-Restore-fix-for-out-of-bounds-array-dereference.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: autoconf, libtool, libuuid-devel
 
@@ -79,6 +80,7 @@ C data structures and routines.
 %patch1 -p1 -b .libdir
 %patch2 -p1 -b .pkgconf
 %patch3 -p1 -b .symlink
+%patch4 -p1 -b .outofbounds
 
 %if 0%{?rhel} < 8
 export CFLAGS="-I/opt/cpanel/ea-openssl11/include"
@@ -186,6 +188,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/rpm/macros.%{pkgname}
 
 %changelog
+* Wed Aug 25 2021 Tim Mullin <tim@cpanel.net> - 1.7.0-6
+- EA-10069: Patch 1.7.0 for CVE-2021-35940
+
 * Mon Nov 23 2020 Julian Brown <julian.brown@cpanel.net> - 1.7.0-5
 - ZC-8005: Remove ea-openssl11 on C8
 
