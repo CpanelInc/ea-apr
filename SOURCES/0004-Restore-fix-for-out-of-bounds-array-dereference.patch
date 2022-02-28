@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Tim Mullin <tim@cpanel.net>
 Date: Wed, 25 Aug 2021 18:25:25 +0000
-Subject: [PATCH 4/4] Restore fix for out-of-bounds array dereference
+Subject: [PATCH 4/5] Restore fix for out-of-bounds array dereference
 
 SECURITY: CVE-2021-35940 (cve.mitre.org)
 
