@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Rishwanth Yeddula <rish@cpanel.net>
 Date: Thu, 22 Mar 2018 13:16:26 -0500
-Subject: [PATCH 2/4] Update pkg-config variables
+Subject: [PATCH 2/5] Update pkg-config variables
 
 ---
  Makefile.in   | 2 +-

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Rishwanth Yeddula <rish@cpanel.net>
 Date: Thu, 22 Mar 2018 13:23:22 -0500
-Subject: [PATCH 3/4] Add apr_stat_fd to file io layer
+Subject: [PATCH 3/5] Add apr_stat_fd to file io layer
 
 ---
  file_io/unix/filestat.c | 48 +++++++++++++++++++++++++++++++++++++++++
