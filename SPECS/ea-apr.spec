@@ -18,7 +18,7 @@ Name: %{pkgname}
 Version: 1.7.0
 
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4540 for more details
-%define release_prefix 7
+%define release_prefix 8
 Release: %{release_prefix}%{?dist}.cpanel
 # ASL 2.0: everything
 # ISC: network_io/apr-1.4.6/network_io/unix/inet_?to?.c
@@ -41,10 +41,14 @@ Patch5: 0005-Check-for-NULL-mutex-in-apr_global_mutex_child_init.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: autoconf, libtool, libuuid-devel
 
-%if 0%{?rhel} > 7
+%if 0%{?rhel} == 8
 BuildRequires: python36
 %else
+    %if 0%{?rhel} == 9
+BuildRequires: python3
+    %else
 BuildRequires: python
+    %endif
 %endif
 
 %if 0%{?rhel} > 7
@@ -190,6 +194,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/rpm/macros.%{pkgname}
 
 %changelog
+* Thu Sep 29 2022 Julian Brown <julian.brown@cpanel.net> - 1.7.0-8
+- ZC-10009: Add changes so that it builds on AlmaLinux 9
+
 * Mon Feb 28 2022 Tim Mullin <tim@cpanel.net> - 1.7.0-7
 - EA-10477: Check for NULL mutex in apr_global_mutex_child_init
 
