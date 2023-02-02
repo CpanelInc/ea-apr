@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Tim Mullin <tim@cpanel.net>
 Date: Fri, 11 Feb 2022 02:44:46 +0000
-Subject: [PATCH 5/5] Check for NULL mutex in apr_global_mutex_child_init
+Subject: [PATCH 4/4] Check for NULL mutex in apr_global_mutex_child_init
 
 Passing a NULL mutex into apr_global_mutex_child_init
 will cause a segmentation fault.
