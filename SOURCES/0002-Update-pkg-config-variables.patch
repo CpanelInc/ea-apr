@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Rishwanth Yeddula <rish@cpanel.net>
 Date: Thu, 22 Mar 2018 13:16:26 -0500
-Subject: [PATCH 2/5] Update pkg-config variables
+Subject: [PATCH 2/4] Update pkg-config variables
 
 ---
  Makefile.in   | 2 +-
@@ -10,7 +10,7 @@ Subject: [PATCH 2/5] Update pkg-config variables
  3 files changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/Makefile.in b/Makefile.in
-index 7aeefd0..0fa79a9 100644
+index 55fb130..3bc3175 100644
 --- a/Makefile.in
 +++ b/Makefile.in
 @@ -69,7 +69,7 @@ installbuilddir=@installbuilddir@
@@ -23,7 +23,7 @@ index 7aeefd0..0fa79a9 100644
  # Create apr_rules.mk suitable for the install tree
  build/apr_rules.out: build/apr_rules.mk
 diff --git a/apr-config.in b/apr-config.in
-index 0431909..738d974 100644
+index d4bf4d8..6fc200f 100644
 --- a/apr-config.in
 +++ b/apr-config.in
 @@ -24,16 +24,17 @@ APR_DOTTED_VERSION="@APR_DOTTED_VERSION@"
