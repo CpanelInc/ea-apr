@@ -8,10 +8,10 @@ Subject: [PATCH 1/4] apr-config: Avoid using -L if libdir is in /usr
  1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/apr-config.in b/apr-config.in
-index bed47ca..d4bf4d8 100644
+index 626d3b0..1ddfcdc 100644
 --- a/apr-config.in
 +++ b/apr-config.in
-@@ -198,8 +198,10 @@ while test $# -gt 0; do
+@@ -213,8 +213,10 @@ while test $# -gt 0; do
      ;;
      --link-ld)
      if test "$location" = "installed"; then
