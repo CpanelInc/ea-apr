@@ -15,7 +15,7 @@
 
 Summary: Apache Portable Runtime library
 Name: %{pkgname}
-Version: 1.7.3
+Version: 1.7.4
 
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4540 for more details
 %define release_prefix 1
@@ -192,6 +192,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/rpm/macros.%{pkgname}
 
 %changelog
+* Mon Apr 17 2023 Cory McIntire <cory@cpanel.net> - 1.7.4-1
+- EA-11357: Update apr from v1.7.3 to v1.7.4
+
 * Fri Mar 31 2023 Cory McIntire <cory@cpanel.net> - 1.7.3-1
 - EA-11326: Update apr from v1.7.2 to v1.7.3
 
