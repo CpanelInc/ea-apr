@@ -15,7 +15,7 @@
 
 Summary: Apache Portable Runtime library
 Name: %{pkgname}
-Version: 1.7.4
+Version: 1.7.5
 
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4540 for more details
 %define release_prefix 1
@@ -192,6 +192,21 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/rpm/macros.%{pkgname}
 
 %changelog
+* Mon Aug 26 2024 Cory McIntire <cory@cpanel.net> - 1.7.5-1
+- EA-12350: Update apr from v1.7.4 to v1.7.5
+- SECURITY: CVE-2023-49582: Apache Portable Runtime (APR):
+     Unexpected lax shared memory permissions (cve.mitre.org)
+     Lax permissions set by the Apache Portable Runtime library on
+     Unix platforms would allow local users read access to named
+     shared memory segments, potentially revealing sensitive
+     application data.
+     This issue does not affect non-Unix platforms, or builds with
+     APR_USE_SHMEM_SHMGET=1 (apr.h)
+     Users are recommended to upgrade to APR version 1.7.5, which
+     fixes this issue.
+     Credits: Thomas Stangner
+
+
 * Mon Apr 17 2023 Cory McIntire <cory@cpanel.net> - 1.7.4-1
 - EA-11357: Update apr from v1.7.3 to v1.7.4
 
