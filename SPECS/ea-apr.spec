@@ -71,7 +71,7 @@ including Unices, MS Win32, BeOS and OS/2.
 Group: Development/Libraries
 Summary: APR library development kit
 Conflicts: subversion-devel < 0.20.1-2
-Requires: %{pkgname}-%{version}-%{release_prefix}, pkgconfig
+Requires: %{pkgname}, pkgconfig
 
 %description devel
 This package provides the support files which can be used to
