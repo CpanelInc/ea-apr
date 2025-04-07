@@ -13,6 +13,11 @@
 # Arches on which the multilib apr.h hack is needed:
 %define multilib_arches %{ix86} ia64 ppc ppc64 s390 s390x x86_64
 
+%if 0%{?rhel} >= 10
+# https://docs.fedoraproject.org/en-US/packaging-guidelines/#_brp_buildroot_policy_scripts
+%global __brp_remove_la_files %nil
+%endif
+
 Summary: Apache Portable Runtime library
 Name: %{pkgname}
 Version: 1.7.5
@@ -43,7 +48,7 @@ BuildRequires: autoconf, libtool, libuuid-devel
 %if 0%{?rhel} == 8
 BuildRequires: python36
 %else
-    %if 0%{?rhel} == 9
+    %if 0%{?rhel} >= 9
 BuildRequires: python3
     %else
 BuildRequires: python
@@ -146,8 +151,7 @@ install -c -m644 %{SOURCE1} $RPM_BUILD_ROOT%{prefix_inc}/apr-%{aprver}/apr.h
 %endif
 
 # Unpackaged files:
-rm -f $RPM_BUILD_ROOT%{prefix_lib}/apr.exp \
-      $RPM_BUILD_ROOT%{prefix_lib}/libapr-*.a
+rm -f $RPM_BUILD_ROOT%{prefix_lib}/apr.exp
 
 %check
 # Fail if LFS support isn't present in a 32-bit build, since this
@@ -179,7 +183,16 @@ rm -rf $RPM_BUILD_ROOT
 %doc docs/incomplete_types docs/non_apr_programs
 %dir %{prefix_bin}
 %attr(0755,root,root) %{prefix_bin}/apr-%{aprver}-config
+%if 0%{?rhel} < 10
 %attr(0755,root,root) %{prefix_lib}/libapr-%{aprver}.*a
+%else
+# On AlmaLinux 10, a "warning" appears in the log saying since the file libapr-1.la does not have
+# a shebang, rpm removed the executable bits.
+# We will see where this goes, but if the executable bit is needed I will need to prepend a shebang on the
+# files.  The contents of the file are just "var=value" hopefully sourced into other scripts.
+# This remains to be seen
+%attr(0644,root,root) %{prefix_lib}/libapr-%{aprver}.*a
+%endif
 %attr(0755,root,root) %{prefix_lib}/libapr-%{aprver}.so
 %{_libdir}/pkgconfig/*.pc
 %dir %{prefix_lib}/apr-%{aprver}
