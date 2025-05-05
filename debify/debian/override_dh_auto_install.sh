@@ -26,5 +26,4 @@ mv $DEB_INSTALL_ROOT$prefix_inc/apr-$aprver/apr.h \
 install -c -m644 $SOURCE1 $DEB_INSTALL_ROOT$prefix_inc/apr-$aprver/apr.h
 
 # Unpackaged files:
-rm -f $DEB_INSTALL_ROOT$prefix_lib/apr.exp \
-      $DEB_INSTALL_ROOT$prefix_lib/libapr-*.a
+rm -f $DEB_INSTALL_ROOT$prefix_lib/apr.exp
