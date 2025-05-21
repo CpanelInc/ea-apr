@@ -13,9 +13,14 @@
 # Arches on which the multilib apr.h hack is needed:
 %define multilib_arches %{ix86} ia64 ppc ppc64 s390 s390x x86_64
 
+%if 0%{?rhel} >= 10
+# https://docs.fedoraproject.org/en-US/packaging-guidelines/#_brp_buildroot_policy_scripts
+%global __brp_remove_la_files %nil
+%endif
+
 Summary: Apache Portable Runtime library
 Name: %{pkgname}
-Version: 1.7.5
+Version: 1.7.6
 
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4540 for more details
 %define release_prefix 1
@@ -200,6 +205,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/rpm/macros.%{pkgname}
 
 %changelog
+* Fri May 16 2025 Cory McIntire <cory.mcintire@webpros.com> - 1.7.6-1
+- EA-12870: Update ea-apr from v1.7.5 to v1.7.6
+
 * Mon Aug 26 2024 Cory McIntire <cory@cpanel.net> - 1.7.5-1
 - EA-12350: Update apr from v1.7.4 to v1.7.5
 - SECURITY: CVE-2023-49582: Apache Portable Runtime (APR):
